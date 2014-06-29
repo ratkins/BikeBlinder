@@ -10,7 +10,7 @@ class RainbowFrameEffect : public FrameEffect {
     CHSV currentColour;
   
   public:
-    RainbowFrameEffect(CRGB *leds, int numLeds) : FrameEffect(leds, numLeds), currentColour(0, 255, 255) {}
+    RainbowFrameEffect(CRGB *leds, int numLeds, int ledsPerBar) : FrameEffect(leds, numLeds, ledsPerBar), currentColour(0, 255, 255) {}
     
     virtual void draw(int frameNumber) {
       currentColour.hue++;

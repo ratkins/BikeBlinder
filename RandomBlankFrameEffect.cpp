@@ -9,11 +9,10 @@ class RandomBlankFrameEffect : public FrameEffect {
   private:
     uint8_t remainingBlankFrames;
     uint8_t barIndex;
-    static const uint8_t ledsPerBar = 45;
   
   public:
-    RandomBlankFrameEffect(CRGB *leds, int numLeds, uint8_t barIndex) 
-    : FrameEffect(leds, numLeds), 
+    RandomBlankFrameEffect(CRGB *leds, int numLeds, int ledsPerBar, uint8_t barIndex) 
+    : FrameEffect(leds, numLeds, ledsPerBar), 
     barIndex(barIndex), 
     remainingBlankFrames(0) {}
 

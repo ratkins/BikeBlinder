@@ -10,11 +10,10 @@ class RandomColourFrameEffect : public FrameEffect {
     uint8_t currentHue;
     uint8_t remainingFrames;
     uint8_t barIndex;
-    static const uint8_t ledsPerBar = 45;
   
   public:
-    RandomColourFrameEffect(CRGB *leds, int numLeds, uint8_t barIndex) 
-    : FrameEffect(leds, numLeds),
+    RandomColourFrameEffect(CRGB *leds, int numLeds, int ledsPerBar, uint8_t barIndex) 
+    : FrameEffect(leds, numLeds, ledsPerBar),
     currentHue(0), 
     barIndex(barIndex) {}
 

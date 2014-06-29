@@ -15,7 +15,7 @@ class FireFrameEffect : public FrameEffect {
     uint8_t heat[45];
   
   public:
-    FireFrameEffect(CRGB *leds, int numLeds, uint8_t barIndex, CRGBPalette16 palette) : FrameEffect(leds, numLeds), 
+    FireFrameEffect(CRGB *leds, int numLeds, int ledsPerBar, uint8_t barIndex, CRGBPalette16 palette) : FrameEffect(leds, numLeds, ledsPerBar), 
     barIndex(barIndex), 
     palette(palette) {
     }
