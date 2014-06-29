@@ -10,20 +10,19 @@
 class FireFrameEffect : public FrameEffect {
   
   private:
-      // Array of temperature readings at each simulation cell
-      uint8_t heat[];
-      CRGBPalette16 palette;
+    uint8_t barIndex;
+    CRGBPalette16 palette;
+    uint8_t heat[45];
   
   public:
-    FireFrameEffect(CRGB *leds, int numLeds, CRGBPalette16 palette) : FrameEffect(leds, numLeds), palette(palette) {
-
+    FireFrameEffect(CRGB *leds, int numLeds, uint8_t barIndex, CRGBPalette16 palette) : FrameEffect(leds, numLeds), 
+    barIndex(barIndex), 
+    palette(palette) {
     }
     
     virtual void draw(int frameNumber) {
-        random16_add_entropy(random());
+      random16_add_entropy(random());
 
-      uint8_t heat[numLeds];
-      
       // Step 1.  Cool down every cell a little
       for (int i = 0; i < numLeds; i++) {
         heat[i] = qsub8(heat[i], random8(0, ((COOLING * 10) / numLeds) + 2));
@@ -45,7 +44,23 @@ class FireFrameEffect : public FrameEffect {
       // Scale the heat value from 0-255 down to 0-240
       // for best results with color palettes.
        byte colorindex = scale8(heat[j], 240);
-       leds[j] = ColorFromPalette(palette, colorindex);
+       switch (barIndex) {
+         case 0:
+           leds[j] = ColorFromPalette(palette, colorindex);
+           break;
+           
+         case 1:
+           leds[45 * 2 - j + 1] = ColorFromPalette(palette, colorindex);
+           break;
+           
+         case 2:
+           leds[45 * 2 + j] = ColorFromPalette(palette, colorindex);
+           break;
+
+         case 3:
+           leds[45 * 3 - j + 1] = ColorFromPalette(palette, colorindex);
+           break;
+       }
      }
    }
 

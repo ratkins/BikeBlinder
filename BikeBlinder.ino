@@ -6,6 +6,7 @@
 #include "FireFrameEffect.cpp"
 
 const uint16_t NUM_LEDS = 180;
+const uint16_t LEDS_PER_BAR = 45;
 const uint8_t DATA_PIN = 9;
 
 CRGB leds[NUM_LEDS];
@@ -24,7 +25,10 @@ RandomBlankFrameEffect randomBlank1(leds, NUM_LEDS, 1);
 RandomBlankFrameEffect randomBlank2(leds, NUM_LEDS, 2);
 RandomBlankFrameEffect randomBlank3(leds, NUM_LEDS, 3);
 
-FireFrameEffect fire(leds, 45, HeatColors_p);
+FireFrameEffect fire0(leds, LEDS_PER_BAR, 0, HeatColors_p);
+FireFrameEffect fire2(leds, LEDS_PER_BAR, 1, HeatColors_p);
+FireFrameEffect fire2(leds, LEDS_PER_BAR, 2, HeatColors_p);
+FireFrameEffect fire2(leds, LEDS_PER_BAR, 3, HeatColors_p);
 
 FrameEffect *effects[] = {
 //  &wave,
@@ -37,7 +41,8 @@ FrameEffect *effects[] = {
 //  &randomBlank1,
 //  &randomBlank2,
 //  &randomBlank3,
-  &fire,
+  &fire0,
+  &fire2,  
 
   NULL
 };
@@ -55,7 +60,7 @@ void loop() {
   }
   LEDS.show();
   LEDS.delay(50);
-  memset8(leds, 0, NUM_LEDS * sizeof(CRGB));  
+//  memset8(leds, 0, NUM_LEDS * sizeof(CRGB));  
 }
 
 void chase(CRGB colour) {
