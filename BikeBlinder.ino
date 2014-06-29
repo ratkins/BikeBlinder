@@ -4,6 +4,7 @@
 #include "RandomBlankFrameEffect.cpp"
 #include "RandomColourFrameEffect.cpp"
 #include "FireFrameEffect.cpp"
+#include "SimpleAdvancingPaletteFrameEffect.cpp"
 
 const uint16_t NUM_LEDS = 180;
 const uint16_t LEDS_PER_BAR = 45;
@@ -26,9 +27,9 @@ RandomBlankFrameEffect randomBlank2(leds, NUM_LEDS, 2);
 RandomBlankFrameEffect randomBlank3(leds, NUM_LEDS, 3);
 
 FireFrameEffect fire0(leds, LEDS_PER_BAR, 0, HeatColors_p);
-FireFrameEffect fire2(leds, LEDS_PER_BAR, 1, HeatColors_p);
+FireFrameEffect fire1(leds, LEDS_PER_BAR, 1, HeatColors_p);
 FireFrameEffect fire2(leds, LEDS_PER_BAR, 2, HeatColors_p);
-FireFrameEffect fire2(leds, LEDS_PER_BAR, 3, HeatColors_p);
+FireFrameEffect fire3(leds, LEDS_PER_BAR, 3, HeatColors_p);
 
 FrameEffect *effects[] = {
 //  &wave,
@@ -41,8 +42,11 @@ FrameEffect *effects[] = {
 //  &randomBlank1,
 //  &randomBlank2,
 //  &randomBlank3,
-  &fire0,
-  &fire2,  
+
+    &fire0,
+    &fire1,
+    &fire2,
+    &fire3,  
 
   NULL
 };
@@ -59,7 +63,7 @@ void loop() {
     effects[effectIndex++]->draw(frameNumber++);
   }
   LEDS.show();
-  LEDS.delay(50);
+  LEDS.delay(25);
 //  memset8(leds, 0, NUM_LEDS * sizeof(CRGB));  
 }
 

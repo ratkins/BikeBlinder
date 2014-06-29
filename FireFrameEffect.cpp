@@ -36,7 +36,7 @@ class FireFrameEffect : public FrameEffect {
       // Step 3.  Randomly ignite new 'sparks' of heat near the bottom
      if (random8() < SPARKING ) {
        int y = random8(7);
-       heat[y] = qadd8(heat[y], random8(160,255));
+       heat[y] = qadd8(heat[y], random8(160, 255));
      }
 
      // Step 4.  Map from heat cells to LED colors
@@ -50,7 +50,7 @@ class FireFrameEffect : public FrameEffect {
            break;
            
          case 1:
-           leds[45 * 2 - j + 1] = ColorFromPalette(palette, colorindex);
+           leds[45 * 2 - j - 1] = ColorFromPalette(palette, colorindex);
            break;
            
          case 2:
@@ -58,7 +58,7 @@ class FireFrameEffect : public FrameEffect {
            break;
 
          case 3:
-           leds[45 * 3 - j + 1] = ColorFromPalette(palette, colorindex);
+           leds[45 * 4 - j - 1] = ColorFromPalette(palette, colorindex);
            break;
        }
      }
