@@ -26,7 +26,7 @@ class FrameEffect {
       if (barIndex & 0x01) {
         leds[(barIndex * ledsPerBar) + ledsPerBar - index - 1] = colour;
       } else {
-        leds[(barIndex * ledsPerBar) + index];
+        leds[(barIndex * ledsPerBar) + index] = colour;
       }
     }
     

@@ -20,8 +20,8 @@ class RandomBlankFrameEffect : public FrameEffect {
       if (remainingBlankFrames > 0) {
         remainingBlankFrames--;
         memset8(leds + (barIndex * ledsPerBar), 0, ledsPerBar * sizeof(CRGB));
-      } else if (random8() > 216) {
-        remainingBlankFrames = random8(1, 5);
+      } else if (random8() > 224) {
+        remainingBlankFrames = random8(3, 10);
       }
     }
   

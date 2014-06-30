@@ -14,8 +14,8 @@ class SimpleAdvancingPaletteFrameEffect : public FrameEffect {
     SimpleAdvancingPaletteFrameEffect(CRGB *leds, int numLeds, int ledsPerBar, CRGBPalette16 palette) : FrameEffect(leds, numLeds, ledsPerBar), palette(palette), colourIndex(0) {}
     
     virtual void draw(int frameNumber) {
-      for (int i = 0; i < 45; i++) {      
-        leds[i] = ColorFromPalette(palette, colourIndex + i);
+      for (int i = 0; i < 45; i++) {     
+        setPixel(i, ColorFromPalette(palette, colourIndex + i));
       }
       colourIndex++;
     }

@@ -15,7 +15,7 @@ CRGB leds[NUM_LEDS];
 
 uint8_t frameNumber = 0;
 
-RainbowFrameEffect rainbow(leds, NUM_LEDS);
+RainbowFrameEffect rainbow(leds, NUM_LEDS, LEDS_PER_BAR);
 
 RandomColourFrameEffect randomColour0(leds, NUM_LEDS, LEDS_PER_BAR, 0);
 RandomColourFrameEffect randomColour1(leds, NUM_LEDS, LEDS_PER_BAR, 1);
@@ -32,19 +32,17 @@ FireFrameEffect fire1(leds, NUM_LEDS, LEDS_PER_BAR, 1, HeatColors_p);
 FireFrameEffect fire2(leds, NUM_LEDS, LEDS_PER_BAR, 2, HeatColors_p);
 FireFrameEffect fire3(leds, NUM_LEDS, LEDS_PER_BAR, 3, HeatColors_p);
 
-SimpleAdvancingPaletteFrameEffect palette(leds, NUM_LEDS, LEDS_PER_BAR, RainbowStripeColors_p);
+SimpleAdvancingPaletteFrameEffect palette(leds, NUM_LEDS, LEDS_PER_BAR, blackToWhitePalette());
 
 FrameEffect *effects[] = {
-//  &wave,
+  
+// Colour generating effects
+  
 //  &randomColour0,
 //  &randomColour1,
 //  &randomColour2,
 //  &randomColour3,  
 //  &rainbow,
-//  &randomBlank0,   
-//  &randomBlank1,
-//  &randomBlank2,
-//  &randomBlank3,
 
 //  &fire0,
 //  &fire1,
@@ -52,6 +50,14 @@ FrameEffect *effects[] = {
 //  &fire3,  
 
   &palette,
+
+// Blanking effects
+
+//  &randomBlank0,   
+//  &randomBlank1,
+//  &randomBlank2,
+//  &randomBlank3,
+
   NULL
 };
 
@@ -69,3 +75,24 @@ void loop() {
   LEDS.delay(1000 / FRAMES_PER_SECOND);
   memset8(leds, 0, NUM_LEDS * sizeof(CRGB));  
 }
+
+CRGBPalette16 purpleAndGreenPalette() {
+  CRGB purple = CHSV( HUE_PURPLE, 255, 255);
+  CRGB green  = CHSV( HUE_GREEN, 255, 255);
+  CRGB black  = CRGB::Black;
+  
+  return CRGBPalette16( 
+    green,  green,  black,  black,
+    purple, purple, black,  black,
+    green,  green,  black,  black,
+    purple, purple, black,  black);
+}
+
+CRGBPalette16 blackToWhitePalette() {
+  CRGBPalette16 whiteToBlack;
+  for (int i = 0; i < 256; i++) {
+    whiteToBlack[i] = CHSV(0, 0, i * 16);
+  };
+  return whiteToBlack;
+}
+
