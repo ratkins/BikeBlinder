@@ -5,11 +5,15 @@
 #include "RandomColourFrameEffect.cpp"
 #include "FireFrameEffect.cpp"
 #include "SimpleAdvancingPaletteFrameEffect.cpp"
+#include "CyclingPaletteFrameEffect.cpp"
 
 const uint16_t NUM_LEDS = 180;
 const uint16_t LEDS_PER_BAR = 45;
 const uint8_t DATA_PIN = 9;
 const uint8_t FRAMES_PER_SECOND = 60;
+
+const uint16_t SECONDS_PER_EFFECT = 30;
+const uint16_t MAX_FRAMES = FRAMES_PER_SECOND * SECONDS_PER_EFFECT;
 
 CRGB leds[NUM_LEDS];
 
@@ -36,7 +40,8 @@ SimpleAdvancingPaletteFrameEffect blackAndWhiteAdvancingEffect(leds, NUM_LEDS, L
 SimpleAdvancingPaletteFrameEffect purpleAndGreenAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, purpleAndGreenPalette());
 SimpleAdvancingPaletteFrameEffect rainbowAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, RainbowStripeColors_p);
 SimpleAdvancingPaletteFrameEffect forestAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, ForestColors_p);
-SimpleAdvancingPaletteFrameEffect oceanAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, OceanColors_p);
+
+CyclingPaletteFrameEffect oceanCyclingEffect(leds, NUM_LEDS, LEDS_PER_BAR, OceanColors_p);
 
 FrameEffect *fireGroup[] = {
   &fire0, &fire1, &fire2, &fire3, NULL
@@ -56,32 +61,38 @@ FrameEffect *randomColourGroup[] = {
 
 FrameEffect *blackAndWhiteGroup[] = {
   &blackAndWhiteAdvancingEffect,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
   NULL  
 };
 
 FrameEffect *purpleAndGreenGroup[] = {
   &purpleAndGreenAdvancingEffect,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
   NULL  
 };
 
 FrameEffect *rainbowAdvancingGroup[] = {
   &rainbowAdvancingEffect,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
   NULL  
 };
 
 FrameEffect *forestAdvancingGroup[] = {
   &forestAdvancingEffect,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
   NULL  
 };
 
-FrameEffect *oceanAdvancingGroup[] = {
-  &oceanAdvancingEffect,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
+FrameEffect *oceanCyclingGroup[] = {
+  &oceanCyclingEffect,
   NULL  
+};
+
+FrameEffect **groups[] = {
+  blackAndWhiteGroup,
+  rainbowGroup,
+  fireGroup,
+  purpleAndGreenGroup,
+  randomColourGroup,
+  forestAdvancingGroup,
+  rainbowAdvancingGroup,
+  oceanCyclingGroup,
 };
 
 void setup() {
@@ -90,13 +101,18 @@ void setup() {
 }
 
 void loop() {
-  int effectIndex = 0;
-  while (effects[effectIndex] != NULL) {
-    effects[effectIndex++]->draw(frameNumber++);
-  }
-  LEDS.show();
-  LEDS.delay(1000 / FRAMES_PER_SECOND);
-  memset8(leds, 0, NUM_LEDS * sizeof(CRGB));  
+    for (int groupIdx = 0; groupIdx < 8; groupIdx++) {
+        FrameEffect **effects = groups[groupIdx];
+        for (int frameIdx = 0; frameIdx < MAX_FRAMES; frameIdx++) {
+            int effectIndex = 0;
+            while (effects[effectIndex] != NULL) {
+              effects[effectIndex++]->draw(frameNumber++);
+            }
+            LEDS.show();
+            LEDS.delay(1000 / FRAMES_PER_SECOND);
+            memset8(leds, 0, NUM_LEDS * sizeof(CRGB));
+        }
+    }
 }
 
 CRGBPalette16 purpleAndGreenPalette() {
