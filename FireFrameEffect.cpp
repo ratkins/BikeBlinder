@@ -23,16 +23,16 @@ class FireFrameEffect : public FrameEffect {
     virtual void draw(int frameNumber) {
       random16_add_entropy(random());
 
-      // Step 1.  Cool down every cell a little
+      // Step 1.  Cool down every cell a little  
       for (int i = 0; i < ledsPerBar; i++) {
         heat[i] = qsub8(heat[i], random8(0, ((COOLING * 10) / ledsPerBar) + 2));
       }
   
       // Step 2.  Heat from each cell drifts 'up' and diffuses a little
-      for (int k = ledsPerBar - 3; k > 0; k--) {
+      for (int k = ledsPerBar - 1; k > 1; k--) {
         heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2] ) / 3;
       }
-    
+      
       // Step 3.  Randomly ignite new 'sparks' of heat near the bottom
      if (random8() < SPARKING ) {
        int y = random8(7);
