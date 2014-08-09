@@ -17,14 +17,15 @@ class RandomBlankFrameEffect : public FrameEffect {
     remainingBlankFrames(0) {}
 
     virtual void draw(int frameNumber) {
-      if (remainingBlankFrames > 0) {
-        remainingBlankFrames--;
-        memset8(leds + (barIndex * ledsPerBar), 0, ledsPerBar * sizeof(CRGB));
-      } else if (random8() > 224) {
-        remainingBlankFrames = random8(3, 10);
-      }
+        if (remainingBlankFrames > 0) {
+            remainingBlankFrames--;
+            memset8(leds + (barIndex * ledsPerBar), 0, ledsPerBar * sizeof(CRGB));
+        } else if (random8() > 224) {
+            remainingBlankFrames = random8(3, 10);
+        }
     }
   
 };
 
 #endif
+

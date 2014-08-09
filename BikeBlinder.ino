@@ -7,9 +7,13 @@
 #include "SimpleAdvancingPaletteFrameEffect.cpp"
 #include "CyclingPaletteFrameEffect.cpp"
 
-const uint16_t NUM_LEDS = 180;
-const uint16_t LEDS_PER_BAR = 45;
-const uint8_t DATA_PIN = 9;
+//const uint16_t NUM_LEDS = 180;  // Note the three-argument vs two-argument setPixel hack in SimpleAdvancingFrameEffect if going back to 4 strip version!
+//const uint16_t LEDS_PER_BAR = 45;
+const uint16_t NUM_LEDS = 72;
+const uint16_t LEDS_PER_BAR = 36;
+
+//const uint8_t DATA_PIN = 9;
+const uint8_t DATA_PIN = 11;
 const uint8_t FRAMES_PER_SECOND = 60;
 
 const uint16_t SECONDS_PER_EFFECT = 30;
@@ -23,18 +27,18 @@ RainbowFrameEffect rainbow(leds, NUM_LEDS, LEDS_PER_BAR);
 
 RandomColourFrameEffect randomColour0(leds, NUM_LEDS, LEDS_PER_BAR, 0);
 RandomColourFrameEffect randomColour1(leds, NUM_LEDS, LEDS_PER_BAR, 1);
-RandomColourFrameEffect randomColour2(leds, NUM_LEDS, LEDS_PER_BAR, 2);
-RandomColourFrameEffect randomColour3(leds, NUM_LEDS, LEDS_PER_BAR, 3);
+//RandomColourFrameEffect randomColour2(leds, NUM_LEDS, LEDS_PER_BAR, 2);
+//RandomColourFrameEffect randomColour3(leds, NUM_LEDS, LEDS_PER_BAR, 3);
 
 RandomBlankFrameEffect randomBlank0(leds, NUM_LEDS, LEDS_PER_BAR, 0);
 RandomBlankFrameEffect randomBlank1(leds, NUM_LEDS, LEDS_PER_BAR, 1);
-RandomBlankFrameEffect randomBlank2(leds, NUM_LEDS, LEDS_PER_BAR, 2);
-RandomBlankFrameEffect randomBlank3(leds, NUM_LEDS, LEDS_PER_BAR, 3);
+//RandomBlankFrameEffect randomBlank2(leds, NUM_LEDS, LEDS_PER_BAR, 2);
+//RandomBlankFrameEffect randomBlank3(leds, NUM_LEDS, LEDS_PER_BAR, 3);
 
 FireFrameEffect fire0(leds, NUM_LEDS, LEDS_PER_BAR, 0, HeatColors_p);
 FireFrameEffect fire1(leds, NUM_LEDS, LEDS_PER_BAR, 1, HeatColors_p);
-FireFrameEffect fire2(leds, NUM_LEDS, LEDS_PER_BAR, 2, HeatColors_p);
-FireFrameEffect fire3(leds, NUM_LEDS, LEDS_PER_BAR, 3, HeatColors_p);
+//FireFrameEffect fire2(leds, NUM_LEDS, LEDS_PER_BAR, 2, HeatColors_p);
+//FireFrameEffect fire3(leds, NUM_LEDS, LEDS_PER_BAR, 3, HeatColors_p);
 
 SimpleAdvancingPaletteFrameEffect blackAndWhiteAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, blackToWhitePalette());
 SimpleAdvancingPaletteFrameEffect purpleAndGreenAdvancingEffect(leds, NUM_LEDS, LEDS_PER_BAR, purpleAndGreenPalette());
@@ -44,18 +48,23 @@ SimpleAdvancingPaletteFrameEffect forestAdvancingEffect(leds, NUM_LEDS, LEDS_PER
 CyclingPaletteFrameEffect oceanCyclingEffect(leds, NUM_LEDS, LEDS_PER_BAR, OceanColors_p);
 
 FrameEffect *fireGroup[] = {
-  &fire0, &fire1, &fire2, &fire3, NULL
+  &fire0, &fire1,
+//  &fire2, &fire3, 
+  NULL
 };
 
 FrameEffect *rainbowGroup[] = {
   &rainbow,
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
+  &randomBlank0, &randomBlank1,
+//  &randomBlank2, &randomBlank3,
   NULL
 };
 
 FrameEffect *randomColourGroup[] = {
-  &randomColour0, &randomColour1, &randomColour2, &randomColour3,  
-  &randomBlank0, &randomBlank1, &randomBlank2, &randomBlank3,
+  &randomColour0, &randomColour1,
+//  &randomColour2, &randomColour3,  
+  &randomBlank0, &randomBlank1,
+//  &randomBlank2, &randomBlank3,
   NULL  
 };
 
@@ -97,11 +106,12 @@ FrameEffect **groups[] = {
 
 void setup() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
+//  Serial.begin(57600);
   LEDS.delay(2000);
 }
 
 void loop() {
-    for (int groupIdx = 0; groupIdx < 8; groupIdx++) {
+    for (int groupIdx = 0; groupIdx < 7; groupIdx++) {
         FrameEffect **effects = groups[groupIdx];
         for (int frameIdx = 0; frameIdx < MAX_FRAMES; frameIdx++) {
             int effectIndex = 0;
@@ -140,4 +150,5 @@ CRGBPalette16 blackToWhitePalette() {
     gray0, gray0, gray2, gray3    
   );
  }
+
 

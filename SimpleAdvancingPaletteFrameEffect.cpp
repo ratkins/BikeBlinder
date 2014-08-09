@@ -16,10 +16,12 @@ class SimpleAdvancingPaletteFrameEffect : public FrameEffect {
       colourIndex(0) {}
     
     virtual void draw(int frameNumber) {
-      for (int i = 0; i < 45; i++) {     
-        setPixel(i, ColorFromPalette(palette, colourIndex + i));
-      }
-      colourIndex++;
+        for (int i = 0; i < ledsPerBar; i++) {     
+//            setPixel(i, ColorFromPalette(palette, colourIndex + i));
+            setPixel(0, i, ColorFromPalette(palette, colourIndex + i));
+            setPixel(1, i, ColorFromPalette(palette, colourIndex + i));            
+        }
+        colourIndex++;
     }
 
 };

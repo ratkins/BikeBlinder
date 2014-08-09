@@ -16,7 +16,7 @@ class CyclingPaletteFrameEffect : public FrameEffect {
       colourIndex(0) {}
     
     virtual void draw(int frameNumber) {
-      for (int i = 0; i < 45; i++) {     
+      for (int i = 0; i < ledsPerBar; i++) {     
         setPixel(i, ColorFromPalette(palette, colourIndex));
       }
       colourIndex++;

@@ -20,3 +20,4 @@ class RainbowFrameEffect : public FrameEffect {
 };
 
 #endif
+
